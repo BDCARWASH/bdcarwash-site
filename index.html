@@ -37,8 +37,13 @@
     .price small{font-size:.9rem;color:var(--muted);font-weight:400}
     .contact{display:grid;grid-template-columns:1fr 1fr;gap:30px}
     form{display:grid;gap:14px}
-    input,textarea{width:100%;padding:14px;border-radius:8px;border:1px solid #2b3747;background:#0e151f;color:white;font:inherit}
-    textarea{min-height:150px;resize:vertical}
+    input,select,textarea{width:100%;padding:14px;border-radius:8px;border:1px solid #2b3747;background:#0e151f;color:white;font:inherit}
+    select{cursor:pointer}
+    select option{background:#0e151f;color:white}
+    textarea{min-height:130px;resize:vertical}
+    .form-title{font-size:1.4rem;margin-bottom:4px}
+    .form-help{color:var(--muted);font-size:.92rem;margin-bottom:6px}
+    .required{color:#78b8ff}
     footer{padding:30px 24px;text-align:center;border-top:1px solid #202b39;color:var(--muted)}
     .note{margin-top:18px;color:#8090a3;font-size:.9rem}
     @media(max-width:800px){nav ul{gap:12px;font-size:.9rem}.grid,.contact{grid-template-columns:1fr 1fr}}
@@ -98,8 +103,8 @@
 
 <section id="contact">
   <div class="container">
-    <h2 class="section-title">Contact</h2>
-    <p class="section-sub">Une question ou envie de réserver ? Contactez BDCARWASH.</p>
+    <h2 class="section-title">Prendre rendez-vous</h2>
+    <p class="section-sub">Remplissez le formulaire ci-dessous. Votre demande sera envoyée directement à BDCARWASH.</p>
     <div class="contact">
       <div class="card">
         <h3>BDCARWASH</h3>
@@ -108,13 +113,37 @@
         <p>🚗 Service mobile de lavage automobile</p>
         <p class="note">📞 <a href="tel:+33777918744">07 77 91 87 44</a><br>✉️ <a href="mailto:bdcarwash62@gmail.com">bdcarwash62@gmail.com</a><br><br>Nous intervenons à domicile ou sur votre lieu de travail dans le Pas-de-Calais et le Nord de la France.</p>
       </div>
+
       <div class="card">
-        <form onsubmit="event.preventDefault(); const n=this.querySelector('[name=nom]').value; const e=this.querySelector('[name=email]').value; const t=this.querySelector('[name=telephone]').value; const m=this.querySelector('[name=message]').value; window.location.href='mailto:bdcarwash62@gmail.com?subject=Demande de rendez-vous BDCARWASH&body='+encodeURIComponent('Nom : '+n+'\nEmail : '+e+'\nTéléphone : '+t+'\n\nDemande : '+m);">
-          <input type="text" placeholder="Votre nom" required>
-          <input type="email" placeholder="Votre e-mail" required>
-          <input type="tel" placeholder="Votre téléphone">
-          <textarea placeholder="Votre demande..." required></textarea>
-          <button class="btn primary" type="submit" style="border:0;cursor:pointer">Envoyer ma demande</button>
+        <form action="https://formspree.io/f/mnpjayze" method="POST">
+          <div>
+            <h3 class="form-title">Demande de rendez-vous</h3>
+            <p class="form-help">Les champs avec <span class="required">*</span> sont obligatoires.</p>
+          </div>
+
+          <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous - BDCARWASH">
+          <input type="hidden" name="_language" value="fr">
+
+          <input type="text" name="nom" placeholder="Votre nom et prénom *" autocomplete="name" required>
+          <input type="email" name="email" placeholder="Votre e-mail *" autocomplete="email" required>
+          <input type="tel" name="telephone" placeholder="Votre téléphone *" autocomplete="tel" required>
+
+          <input type="text" name="vehicule" placeholder="Votre véhicule (ex : Peugeot 308) *" required>
+
+          <select name="prestation" required>
+            <option value="" selected disabled>Choisissez une prestation *</option>
+            <option value="Lavage extérieur">Lavage extérieur</option>
+            <option value="Nettoyage intérieur">Nettoyage intérieur</option>
+            <option value="Formule complète">Formule complète</option>
+            <option value="Autre / Je ne sais pas">Autre / Je ne sais pas</option>
+          </select>
+
+          <input type="date" name="date_souhaitee" aria-label="Date souhaitée *" required>
+          <input type="time" name="heure_souhaitee" aria-label="Heure souhaitée *" required>
+          <input type="text" name="adresse" placeholder="Adresse d'intervention *" autocomplete="street-address" required>
+          <textarea name="message" placeholder="Précisez votre demande, l'état du véhicule ou toute information utile..."></textarea>
+
+          <button class="btn primary" type="submit" style="border:0;cursor:pointer">📅 Demander mon rendez-vous</button>
         </form>
       </div>
     </div>
